@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrivAI - Security & Privacy Center</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../assets/icon48.png" alt="PrivAI Logo" class="brand-logo-img">
+        <div>
+          <h2>PrivAI</h2>
+          <span class="version-tag">Security Center v1.0</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button type="button" class="nav-item active" data-tab="tab-sandbox">
+          <span class="nav-icon">🧪</span> Live Test Bench
+        </button>
+        <button type="button" class="nav-item" data-tab="tab-rules">
+          <span class="nav-icon">🛡️</span> Custom Rules & Keywords
+        </button>
+        <button type="button" class="nav-item" data-tab="tab-vault">
+          <span class="nav-icon">🔐</span> Session Vault Inspector
+        </button>
+        <button type="button" class="nav-item" data-tab="tab-backend">
+          <span class="nav-icon">⚡</span> Spring Boot Engine
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="shield-badge-live">
+          <span class="pulse-dot"></span>
+          <span>Zero Data Leaves Browser</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- TAB 1: Live Interactive Test Bench -->
+      <section id="tab-sandbox" class="tab-pane active">
+        <div class="page-header">
+          <h1>Interactive Privacy Test Bench</h1>
+          <p>Simulate how PrivAI sanitizes raw prompts before external transmission and reconstructs incoming AI responses locally.</p>
+        </div>
+
+        <!-- Sample Preset Buttons -->
+        <div class="preset-bar">
+          <span class="preset-label">Load Preset:</span>
+          <button type="button" class="btn-preset" data-preset="kyc">🇮🇳 Indian KYC & Banking</button>
+          <button type="button" class="btn-preset" data-preset="dev">💻 Dev Secrets & Keys</button>
+          <button type="button" class="btn-preset" data-preset="corp">🏢 Corporate Confidential</button>
+        </div>
+
+        <!-- 3-Column Interactive Sandbox Grid -->
+        <div class="sandbox-grid">
+          <!-- Step 1: Raw Prompt -->
+          <div class="sandbox-card">
+            <div class="card-header">
+              <div class="step-badge">Step 1</div>
+              <h3>Raw Prompt (Before AI)</h3>
+            </div>
+            <div class="card-body">
+              <textarea id="bench-raw-input" placeholder="Type prompt with sensitive PII (Aadhaar, PAN, phone, email, etc.)..."></textarea>
+            </div>
+            <div class="card-footer">
+              <button type="button" id="btn-bench-sanitize" class="btn-action primary">
+                🛡️ Sanitize Prompt
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Sanitized Prompt -->
+          <div class="sandbox-card">
+            <div class="card-header">
+              <div class="step-badge accent">Step 2</div>
+              <h3>Sanitized Payload (Sent to AI)</h3>
+            </div>
+            <div class="card-body">
+              <div id="bench-sanitized-output" class="code-box">
+                <span class="placeholder-text">Sanitized tokens will appear here...</span>
+              </div>
+              <div class="entity-summary" id="bench-entity-summary">
+                <span>0 entities detected</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="button" id="btn-bench-simulate-ai" class="btn-action">
+                🤖 Simulate AI Reply
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Local Reconstruction -->
+          <div class="sandbox-card">
+            <div class="card-header">
+              <div class="step-badge success">Step 3</div>
+              <h3>Local Reconstructed Response</h3>
+            </div>
+            <div class="card-body">
+              <div id="bench-reconstructed-output" class="code-box">
+                <span class="placeholder-text">Reconstructed answer with decrypted context...</span>
+              </div>
+              <div class="unmask-summary" id="bench-unmask-summary">
+                <span>Safe local unmasking</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="button" id="btn-bench-unmask" class="btn-action success">
+                🔓 Reconstruct Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Custom Rules & Keywords -->
+      <section id="tab-rules" class="tab-pane">
+        <div class="page-header">
+          <h1>Custom Rules & Keywords Blacklist</h1>
+          <p>Define proprietary entity types, regular expressions, and corporate confidentiality terms to sanitize automatically.</p>
+        </div>
+
+        <div class="rules-container">
+          <!-- Keywords Blacklist Card -->
+          <div class="settings-card">
+            <h3>Confidential Keywords Blacklist</h3>
+            <p class="card-subtext">Words or project codenames that should always be masked (comma separated).</p>
+            <textarea id="rules-keywords-input" rows="3" placeholder="ProjectApollo, ProjectTitan, InternalFinancialReport..."></textarea>
+            <div class="card-actions">
+              <button type="button" id="btn-save-keywords" class="btn-action primary">Save Keywords</button>
+              <span id="keywords-save-status" class="status-msg"></span>
+            </div>
+          </div>
+
+          <!-- Custom RegEx Rules Builder -->
+          <div class="settings-card">
+            <h3>Custom RegEx Patterns</h3>
+            <p class="card-subtext">Add custom regular expressions for organization-specific identifiers (e.g., Employee IDs, Internal Tickets).</p>
+            
+            <div class="regex-form">
+              <input type="text" id="regex-label" placeholder="Rule Label (e.g. Employee ID)">
+              <input type="text" id="regex-pattern" placeholder="Regex Pattern (e.g. \bEMP-[0-9]{5}\b)">
+              <button type="button" id="btn-add-regex" class="btn-action">Add Rule</button>
+            </div>
+
+            <div class="rules-list" id="custom-rules-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Session Vault Inspector -->
+      <section id="tab-vault" class="tab-pane">
+        <div class="page-header">
+          <h1>Session Vault Inspector</h1>
+          <p>Review active token mappings currently stored in your browser's encrypted local memory. No data is ever transmitted.</p>
+        </div>
+
+        <div class="vault-container">
+          <div class="vault-toolbar">
+            <div class="vault-stats">
+              <span id="vault-count">0</span> Active Token Mappings
+            </div>
+            <button type="button" id="btn-clear-vault" class="btn-action danger">
+              🗑️ Clear Session Vault
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="vault-table">
+              <thead>
+                <tr>
+                  <th>Masked Token</th>
+                  <th>Protected Value (Masked Preview)</th>
+                  <th>Raw Preview</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="vault-table-body">
+                <tr>
+                  <td colspan="4" class="empty-cell">No active session mappings in vault.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Spring Boot Backend Settings -->
+      <section id="tab-backend" class="tab-pane">
+        <div class="page-header">
+          <h1>Spring Boot Engine Configuration</h1>
+          <p>Configure and test connectivity with your local Java Spring Boot microservice for enterprise verification.</p>
+        </div>
+
+        <div class="settings-card max-600">
+          <h3>Local Backend Service URL</h3>
+          <p class="card-subtext">Default: <code>http://localhost:8080</code></p>
+          <div class="input-group">
+            <input type="text" id="backend-url-input" value="http://localhost:8080">
+            <button type="button" id="btn-ping-backend" class="btn-action">Ping Service</button>
+          </div>
+
+          <div class="backend-connection-status" id="backend-status-card">
+            <div class="status-indicator" id="backend-ping-indicator"></div>
+            <div id="backend-ping-result">Click "Ping Service" to check local microservice.</div>
+          </div>
+
+          <div class="backend-instructions">
+            <h4>How to run the local Spring Boot Microservice:</h4>
+            <pre><code>cd springboot-backend
+mvn spring-boot:run</code></pre>
+            <p>Runs strictly on <code>localhost:8080</code>. Only handles local REST requests from the PrivAI extension.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../scripts/pii-engine.js"></script>
+  <script src="../scripts/vault.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

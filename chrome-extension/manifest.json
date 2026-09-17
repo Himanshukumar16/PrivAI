@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "PrivAI - Privacy Middleware for AI",
+  "version": "1.0.0",
+  "description": "Zero-trust privacy middleware that anonymizes PII and sensitive data before sending to ChatGPT, Claude, and Gemini.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://chatgpt.com/*",
+    "*://*.chatgpt.com/*",
+    "*://claude.ai/*",
+    "*://*.claude.ai/*",
+    "*://gemini.google.com/*",
+    "http://localhost:8080/*",
+    "http://127.0.0.1:8080/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://*.chatgpt.com/*",
+        "*://claude.ai/*",
+        "*://*.claude.ai/*",
+        "*://gemini.google.com/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/pii-engine.js",
+        "scripts/vault.js",
+        "scripts/content.js"
+      ],
+      "css": [
+        "styles/content.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "styles/content.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

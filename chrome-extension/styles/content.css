@@ -1,0 +1,194 @@
+/* PrivAI Content Styles - Modern Glassmorphic Floating Shield */
+
+:root {
+  --privai-primary: #6366f1;
+  --privai-primary-hover: #4f46e5;
+  --privai-accent: #06b6d4;
+  --privai-bg: rgba(15, 23, 42, 0.88);
+  --privai-border: rgba(99, 102, 241, 0.35);
+  --privai-glow: rgba(99, 102, 241, 0.25);
+  --privai-text: #f8fafc;
+  --privai-text-muted: #94a3b8;
+  --privai-danger: #ef4444;
+  --privai-warning: #f59e0b;
+  --privai-success: #10b981;
+}
+
+/* Floating Shield Bar Container */
+#privai-floating-bar {
+  position: absolute;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--privai-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--privai-border);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4),
+              0 0 15px var(--privai-glow);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  color: var(--privai-text);
+  line-height: 1.4;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+#privai-floating-bar.privai-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Shield Brand Badge */
+.privai-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: #38bdf8;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.privai-logo-img-floating {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+/* PII Detection Counter & Status */
+.privai-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--privai-text-muted);
+}
+
+.privai-status.privai-has-pii {
+  color: #fcd34d;
+}
+
+.privai-badge-count {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  animation: privai-pulse 2s infinite ease-in-out;
+}
+
+@keyframes privai-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+}
+
+/* Entity Pills Container */
+.privai-pills {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 240px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.privai-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.privai-pill {
+  background: rgba(99, 102, 241, 0.25);
+  border: 1px solid rgba(99, 102, 241, 0.45);
+  color: #a5b4fc;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* Action Buttons */
+.privai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.privai-btn-sanitize {
+  background: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.privai-btn-sanitize:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.6);
+}
+
+.privai-btn-sanitize:active {
+  transform: translateY(0);
+}
+
+/* Response Unmask Button on AI Messages */
+.privai-unmask-container {
+  display: inline-flex;
+  align-items: center;
+  margin: 6px 0;
+  padding: 4px 8px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #e2e8f0;
+  backdrop-filter: blur(8px);
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.privai-unmask-btn {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.privai-unmask-btn:hover {
+  background: rgba(56, 189, 248, 0.3);
+  border-color: #38bdf8;
+}
+
+.privai-unmask-tag {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-weight: 700;
+}

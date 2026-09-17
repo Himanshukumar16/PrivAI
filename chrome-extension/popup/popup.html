@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrivAI - Privacy Dashboard</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <img src="../assets/icon48.png" alt="PrivAI Logo" class="brand-logo-img">
+        <div>
+          <h1>PrivAI</h1>
+          <span class="tagline">Zero-Trust AI Privacy Shield</span>
+        </div>
+      </div>
+      <div class="master-toggle">
+        <label class="switch">
+          <input type="checkbox" id="master-switch" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <!-- Protection Status Card -->
+    <div class="status-card" id="status-card">
+      <div class="status-indicator active" id="status-dot"></div>
+      <div class="status-text">
+        <div class="status-title" id="status-title">Real-time Shield Active</div>
+        <div class="status-subtitle" id="status-subtitle">Sanitizing prompts for ChatGPT, Claude & Gemini</div>
+      </div>
+    </div>
+
+    <!-- Live Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-entities">0</div>
+        <div class="stat-label">Entities Protected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-prompts">0</div>
+        <div class="stat-label">Prompts Sanitized</div>
+      </div>
+    </div>
+
+    <!-- Engine Mode Selector -->
+    <div class="section-block">
+      <div class="section-title">Detection Engine</div>
+      <div class="engine-selector">
+        <label class="radio-card">
+          <input type="radio" name="engine-mode" value="local" checked id="engine-local">
+          <div class="radio-content">
+            <span class="engine-name">Browser Engine</span>
+            <span class="engine-desc">100% In-Browser (Instant)</span>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="engine-mode" value="backend" id="engine-backend">
+          <div class="radio-content">
+            <span class="engine-name">Spring Boot API</span>
+            <span class="engine-desc" id="backend-status-text">Connecting...</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Quick Category Toggles -->
+    <div class="section-block">
+      <div class="section-title">Active Protection Rules</div>
+      <div class="category-grid">
+        <label class="cat-pill">
+          <input type="checkbox" id="cat-aadhaar" checked>
+          <span>🇮🇳 Aadhaar & PAN</span>
+        </label>
+        <label class="cat-pill">
+          <input type="checkbox" id="cat-creditCard" checked>
+          <span>💳 Credit Cards (Luhn)</span>
+        </label>
+        <label class="cat-pill">
+          <input type="checkbox" id="cat-email" checked>
+          <span>📧 Email Addresses</span>
+        </label>
+        <label class="cat-pill">
+          <input type="checkbox" id="cat-phone" checked>
+          <span>📱 Phone Numbers</span>
+        </label>
+        <label class="cat-pill">
+          <input type="checkbox" id="cat-secrets" checked>
+          <span>🔑 API Keys & JWT</span>
+        </label>
+        <label class="cat-pill">
+          <input type="checkbox" id="cat-customKeywords" checked>
+          <span>🏢 Confidential Data</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Quick Mini-Test Sandbox -->
+    <div class="section-block">
+      <div class="section-title">Instant Prompt Tester</div>
+      <div class="quick-tester">
+        <textarea id="test-input" placeholder="Type prompt here (e.g. Email ramesh@test.com with Aadhaar 2345 6789 0123)..." rows="2"></textarea>
+        <div class="tester-actions">
+          <button type="button" id="btn-quick-sanitize" class="btn-primary">Sanitize</button>
+          <button type="button" id="btn-quick-reconstruct" class="btn-secondary">Unmask</button>
+        </div>
+        <div id="test-result" class="test-result hidden"></div>
+      </div>
+    </div>
+
+    <!-- Footer Links -->
+    <footer class="footer">
+      <button type="button" id="open-options" class="footer-btn">
+        ⚙️ Settings & Custom Rules
+      </button>
+    </footer>
+  </div>
+
+  <script src="../scripts/pii-engine.js"></script>
+  <script src="../scripts/vault.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
